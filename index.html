@@ -38,26 +38,17 @@
       background: rgba(26, 32, 44, 0.9);
     }
 
-    /* Author Credit */
-    .author-credit {
-      position: fixed;
-      top: 30px;
-      right: 90px;
-      font-size: 0.9rem;
-      color: #4a5568;
-      opacity: 0.8;
-      z-index: 1000;
-    }
-
-    body.dark-mode .author-credit {
-      color: #cbd5e0;
-    }
-
-    /* Dark Mode Toggle */
-    .dark-mode-toggle {
+    /* Control Buttons */
+    .control-buttons {
       position: fixed;
       top: 20px;
       right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .dark-mode-toggle, .pdf-download-top {
       background: #4CAF50;
       color: white;
       border: none;
@@ -68,15 +59,59 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
+    }
+
+    .dark-mode-toggle:hover, .pdf-download-top:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Scroll Buttons */
+    .scroll-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       z-index: 1000;
     }
 
-    .dark-mode-toggle:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.2);
+    .scroll-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .scroll-btn:hover {
+      transform: translateY(-2px);
+      background: #45a049;
+    }
+
+    /* Author Credit */
+    .author-credit {
+      position: fixed;
+      top: 30px;
+      left: 20px;
+      font-size: 0.9rem;
+      color: #4a5568;
+      opacity: 0.8;
+      z-index: 1000;
+    }
+
+    body.dark-mode .author-credit {
+      color: #cbd5e0;
     }
 
     /* Questions Container */
@@ -180,25 +215,33 @@
       background: rgba(198, 40, 40, 0.2);
     }
 
-    /* PDF Download Button */
-    .download-btn {
-      display: block;
-      width: 220px;
-      margin: 40px auto;
-      padding: 14px;
-      background: linear-gradient(135deg, #4CAF50, #43a047);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-
-    .download-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .container {
+        margin: 15px;
+        padding: 15px;
+      }
+      
+      .question-container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+        padding: 15px;
+      }
+      
+      .dark-mode-toggle, .pdf-download-top {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+      
+      .author-credit {
+        top: 25px;
+        left: 15px;
+        font-size: 0.8rem;
+      }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -206,147 +249,161 @@
 <body>
   <h1>Percentage Questions by Raman Tiwari</h1>
   <div class="author-credit">By-Adarsh Kumar</div>
-  <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌓</button>
+  <div class="control-buttons">
+    <button class="pdf-download-top" onclick="downloadPDF()" title="Download PDF">📥</button>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Theme">🌓</button>
+  </div>
+  <div class="scroll-buttons">
+    <button class="scroll-btn" onclick="scrollToTop()" title="Go to top">↑</button>
+    <button class="scroll-btn" onclick="scrollToBottom()" title="Go to bottom">↓</button>
+  </div>
 
   <div class="container" id="questions">
     <!-- Questions will be inserted here -->
   </div>
 
-  <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
-
   <script>
+    // ********** PASTE YOUR QUESTIONS HERE **********
+    const questions = [
+    { q: "Salary of a person increases by 42.84% and thereby his final salary is Rs 72,000. Find his initial salary?", a: "50,400" },
+    { q: "The population of a town decreases by 28% and thereby the final population of the town is 432,000. Find the reduction in population?", a: "16,800" },
+    { q: "The salary of a person increases by 12.5% but due to inconsistency in his work, his salary reduces by 6,875. If his final salary is Rs 21,250, then find his initial salary?", a: "2,500" },
+    { q: "If house tax is paid before the due date, one gets a reduction of 12% on the amount of the bill. By paying the tax before the due date, a person got a reduction of Rs. 2,100. The amount (in Rs.) of house tax was:", a: "15,400" },
+    { q: "Akhil gives 71 3/7% of his property to his elder son. If the value of 35% of the property that his elder son gets is Rs 125,000, then find the value of 45% of the whole property?", a: "22,500" },
+    { q: "The population of a town increases by 20% in the first year, decreases by 25% in the second year, and then again increases by 14.28% in the third year. Find the overall percentage change in the population?", a: "2.85% increase" },
+    { q: "The population of a town increases by 20% in the first year, decreases by 25% in the second year, and then again increases by 14.28% in the third year. If the final population is 108,000, then find the initial population?", a: "10,500" },
+    { q: "Population of a city Delhi at the end of 2016 was 80,000, which was increased by 26% and 22.22% in the years 2017 and 2018 respectively. In the year 2019, because of Corona, many people died, and there was a certain percentage decrease in population. Again in the year 2020, the population was increased by 36.36%. If the population of Delhi at the end of 2020 is 1.05 lakh, find by how much % the population of the city has decreased in the year 2019?", a: "37.5%" },
+    { q: "Salary of a person first increases by 5% and then the resultant salary is decreased by 7%. Find the overall % change in the salary.", a: "2.35% decrease" },
+    { q: "Population of a town increases by 3x% in the first year and then decreases by 2x% in the second year. If the overall population increase by 4%, then find the possible number of integral values of x?", a: "1" },
+    { q: "Population of a town increases by 2x% in the first year, 3x% in the second year, then decreases by 16.67% (approximately) in the third year, and then increases by 11.11% (approximately) in the 4th year. If the overall population in this time period increases by approximately 44.44%, then find the value of x?", a: "10" },
+    { q: "Population of a town increases by 2x% in the first year, 11.11% in the second year, then decreases by 16.67% (approximately) in the third year, and then increases by 3x% (approximately) in the 4th year. If the overall population in this time period increases by approximately 44.44%, then find the value of x?", a: "10" },
+    { q: "If a number first increases by 7%, then decreases by 3%, and finally the resultant number increases by 11%, then find the overall percentage change (correct up to 3 decimal places).", a: "15.2069%" },
+    { q: "A library has 20% of the books in Hindi, 50% of the remaining in English, and 30% of the remaining in French. The rest 6,300 books are in a regional language. Then find the number of books in the library?", a: "22,500" },
+    { q: "In an examination, A got 25% marks more than B, B got 10% less than C, and C got 25% more than D. If D got 320 marks out of 500, the marks obtained by A were?", a: "450" },
+    { q: "Abhijeet spent 20% of his income on food and 15% on children's education. 40% of the remaining he spent on entertainment and transport together, and 30% on medical. He is left with an amount of Rs. 8,775 after all these expenditures. What is Abhijeet's monthly income?", a: "45,000" },
+    { q: "Population of a town is increased by 30%, then decreased by 25%, and then further increased by 25%. What is the net increase or decrease percentage in the population?", a: "21.975%" },
+    { q: "Population of a town in the year 2017 increased by 40%, in 2018 decreased by 25%, in 2019 increased by 15%, and then in 2020 decreased by 20%. If the final population is 338,100, then find the initial population.", a: "350,000" },
+    { q: "The price of a machine depreciates by 7% every year. Find the overall depreciation % in the price of the machine after 3 years (correct up to three decimal places).", a: "19.564%" },
+    { q: "Salary of a person increases from Rs 308,700 to Rs 656,100 in a quarter of a year such that the percentage increase in his salary is x% in each month successively. Find the value of x?", a: "28.56%" },
+    { q: "After three successive changes (two increases and one decrease, not necessarily in that particular order), the price of a watch became 154/125 of its initial price. If the percentage changes are P, 2P, and 4P, respectively, then what is the value of 4P?", a: "40" },
+    { q: "After two successive increases, the price of a property has become 48/25 times its initial value. By how much percent was the price increased for the first time if the second increase was thrice as high (in percent) as the first?", a: "20%" },
+    { q: "An employee Ramu got a promotion, due to which his salary increased by 26 2/3%. But due to his inconsistency in work, his salary was reduced by Rs. 2,550. Ramu was transferred to Delhi for a project, so his salary was again increased by 12.5%. Now his current salary is Rs. 15,300. Find his initial income?", a: "12,750" },
+    { q: "The population of town B is 56.25% more than that of town A. For the next two years, the population of A increases by x% per year, and that of B decreases by the same percentage per year. After 2 years, if the population of A and B become equal, then the value of x is?", a: "11.11%" },
+    { q: "Current income of Ram is 20% more than Karan, where the income of Karan is 40% less than Amit. Next year, the income of Ram, Shyam, and Amit increases by 10%, 20%, and 30% respectively. Find the resultant total income of all three is how much percent more than the previous total income.", a: "21.2%" },
+    { q: "A man spent 30% of his salary on rent and 15% on grocery items. Out of the remaining salary, he invests 20% in a scheme and 40% in a fixed deposit. He is left with Rs. 15,400. Find the difference between the amount he deposited in FD and spent on rent?", a: "5,600" },
+    { q: "Ram gives 30% of his salary to his friend. 40% of the remaining salary he invests in a mutual fund. Out of the remaining income, he invests in an insurance scheme and PPF in the ratio 5:2. If the difference between the total amount invested in the mutual fund, insurance scheme together, and the amount he gave to his friend is Rs. 22,400, find the salary of Ram?", a: "80,000" },
+    { q: "A man spent 1/4th of his salary on rent and 33.33% on grocery items. Out of the remaining salary, he invests 14.28% in a scheme and 50% in a fixed deposit. He is left with Rs. 12,500. Find the difference between the amount he deposited in FD and spent on rent?", a: "3,500" },
+    { q: "In an election between two candidates, a candidate who gets 60% of the polled votes wins by 2,480 votes. If 20% of voters didn't cast their vote and 30% of the polled votes are declared invalid, then the total number of valid votes?", a: "3,472" },
+    { q: "In an election, there were five candidates, and 33.33% of the registered voters did not cast their votes. One of the candidates received 25% of the casted votes, while the other four candidates received the remaining casted votes in the proportion 1:2:3:4. If the winner of the election received 5,535 votes more than the candidate who got the least votes, then the number of registered voters was?", a: "36,900" },
+    { q: "In an election between two candidates, 30% of voters didn't cast their votes. 720 votes out of the polled votes are declared invalid. A candidate who gets 40% of the votes out of the total voters in the voting list and won the election by 1,000 votes. Then find the total number of votes polled?", a: "1,960" },
+    { q: "In an election, two candidates participated. 15% of voters did not vote. 3,900 votes were declared invalid, and the winner gets 57% of the valid votes and wins by 1,120 votes. Find the number of voters in the voting list.", a: "14,000" },
+    { q: "In an election between two candidates, x% of voters didn't cast their vote, and y% of the votes are declared invalid. Here, x and y are integers, and y is 10 less than x. A person who gets 35% of the total voters in the voting list wins the election by 25% of the valid votes polled. Find the value of 3x + 2y?", a: "130" },
+    { q: "If 20% of A is equal to 30% of B, then find A is what percent of B?", a: "150%" },
+    { q: "If the income tax is increased by 19%, the net income is reduced by 1%. The rate of income tax is?", a: "5%" },
+    { q: "If the income tax is increased by 22%, the net income is reduced by 3%. The rate of income tax is?", a: "12%" },
+    { q: "Fresh fruit contains 68% water, and dry fruits contain 20% water. How much dry fruit can be obtained from 100 kg of fresh fruits?", a: "40 kg" },
+    { q: "A large watermelon weighs 36 kg with 92% of its weight being water. It is kept out in the sun, and after some time, only 91% of its weight is water. By what weight did the watermelon decrease?", a: "4 kg" },
+    { q: "Fresh dates contain 80% water by weight, whereas dry dates contain 10% water by weight. A trader purchases fresh dates at Rs. 100 per kg and makes a profit of 10% by selling them after drying. Find the selling price per kg at which the trader sells the dry dates?", a: "Rs. 495" },
+    { q: "There was a heavy viral infection in a country, so the government of that country announced that some employees would stay at home. So, in an organization, yesterday 11% of male and 15% of female employees were absent, but today 32% of male and 15% of female employees are absent. However, the number of male and female employees present today is equal. If yesterday the total number of employees present was 5,495, then find the total number of employees in the organization?", a: "6,300" },
+    { q: "For the cause of the coronavirus, the government told some employees to stay at home. So, in an organization, yesterday 13% of male and 20% of female employees were absent, but today 8% of female and 31% of male employees are absent. However, the number of male and female employees present today is equal. If the total number of employees present yesterday was 3,528, then find the total number of employees in the organization?", a: "4,200" },
+    { q: "Ram scored 37% in an exam and passed by 43 marks, whereas Shyam scored 33% in the exam and failed by 17 marks. Find: Maximum marks, Pass marks, Pass percentage", a: "1,500, 512, 34.13%" },
+    { q: "Ram scored 38% in an exam and failed by 17 marks. Shyam scored 40% in the same exam and passed by 5 marks. Find: Maximum marks, Pass marks, Pass percentage", a: "1,100, 435, 39.5%" },
+    { q: "In an exam, Ram scored 43% marks, and thereby his score was 23 more than Karan. Shyam scored 31% in the same exam, and his score was 13 less than Karan. Find the score of Karan.", a: "106" },
+    { q: "There is an entrance exam held every year, and the aspirants are required to clear a particular fixed cut-off or pass percentage. Amit scored 40% in the exam and failed. The next year, he increased his score by 50% and still failed by 70 marks. The next year, he again gave the exam, and his score increased by 12 percentage points compared to the last year, and this time he passed by 14 marks. Find the pass percentage of the exam?", a: "70%" },
+    { q: "In an examination, it is required to get 296 of the total maximum aggregate marks to pass. A student gets 259 marks and is declared failed. The difference between the marks obtained by the student and that required to pass is 5%. What are the maximum aggregate marks a student can get?", a: "740" },
+    { q: "Meena scored 40% in an examination, and after review, even though her score was increased by 50%, she failed by 35 marks. If her post-review score is increased by 20%, she will have 7 marks more than the passing score. The percentage score needed for passing the examination is?", a: "70%" },
+    { q: "Rahul scored 53% marks in an exam, but his score was 56 less than Rohit. Rajiv scored 65% in the same exam, and his score was 40 more than Rohit. Vivek's score is 11% more than Rohit. Find the score of Vivek?", a: "532.8" },
+    { q: "A candidate who gets x% marks in an examination fails by 30 marks, but another candidate who gets y% marks passes by 42 marks. If the total marks obtained by both candidates are 312, and if x and y are both integers, then which of the following could be the value of x?", a: "30" },
+    { q: "A person increases his consumption of sugar by 37.5% because the price of sugar is reduced by x%. Find x, if the expenditure remains constant.", a: "27.27%" },
+    { q: "The price of a commodity is increased by 25%, and the quantity purchased is decreased by 23%. What is the percentage increase or decrease in the amount spent on the commodity?", a: "3.75% decrease" },
+    { q: "Basir’s working hours per day were increased by 15%, and his wages per hour were increased by 20%. By how much percent did his daily earnings increase?", a: "38%" },
+    { q: "The price of a movie ticket in a zoo is decreased by 1%, but the total revenue collection is increased by 83.33% because the number of visitors increased. If the number of visitors is now 350, then find how many visitors increased in the zoo?", a: "189" },
+    { q: "In a village, the production of food grains increased by 40%, and the per capita production of food grains increased by 27% during a certain period. The percentage by which the population of the village increased during the same period is nearest to?", a: "10%" },
+    { q: "A man's annual income has increased by Rs. 40,000, but the tax on income that he has to pay has reduced from 11.5% to 6.9%. He now pays the same amount of tax as before. What is his increased income (in Rs.)?", a: "100,000" },
+    { q: "A man's annual income has increased by Rs. 2.6 lakhs, but the tax on income that he has to pay has reduced from 17.1% to 13.3%. In both cases, 35% of the income is tax-free. What is his initial income (in lakhs) if he paid equal taxes in both cases?", a: "9.1 lakh" },
+    { q: "A man's annual income has increased by Rs. 2.2 lakhs, but the tax on income that he has to pay has reduced from 17.1% to 13.3%. In both cases, 35% and 40% of the income is tax-free. What is his initial income (in lakhs) if he paid equal taxes in both cases?", a: "5.6 lakh" },
+    { q: "A solution contains 16.5% salt. From this, 18 liters of water is evaporated. Now, the concentration of salt in the solution becomes 20.9%. Find the initial quantity of the solution?", a: "85.5 liters" },
+    { q: "When the price of sugar increased by 53%, a family reduced its consumption per month such that the expenditure on sugar was only 19% more than the earlier one. If the family consumed 38.7 kg of sugar per month earlier, then what is the reduction in consumption of sugar per month?", a: "8.6 kg" },
+    { q: "Due to a 25% fall in the rate of eggs, one can buy 2 dozen eggs more than before by investing Rs. 162. Then, the original rate per dozen of the eggs is?", a: "Rs. 27" },
+    { q: "The government reduced the price of sugar by 15%. By this, a consumer can buy 7.4 kg more sugar for Rs. 1,258. The original price per kg of sugar is?", a: "Rs. 30" },
+    { q: "There is 26.4% sugar in the 28-liter solution of sugar and water. After boiling, 6 liters of water get evaporated from it. Then, the % of sugar left in the solution is?", a: "31.68%" },
+    { q: "John gets Rs. 57 per hour of regular work and Rs. 114 per hour of overtime work. He works altogether 172 hours, and his income from overtime hours is 15% of his income from regular hours. Then, for how many hours did he work overtime?", a: "12 hours" },
+    { q: "A rectangular portion of an airport runway was getting repaired for which an estimate was made on the basis of a rate of Rs. R per square unit. But while doing the work, the length of the portion got increased by 10%, and the breadth by 8%. Over and above this, there was an increase in the cost of the repair work to the extent of 15%. What was the overall percentage increase in the cost of repair over the estimate?", a: "36.62%" },
+    { q: "A family consumes 25 kg of rice and 9 kg of wheat per month, spending Rs. 350. The price of rice is 20% of the price of wheat. If the price of wheat is increased by 20%, then find the percentage reduction in the consumption of rice if they have the same amount to spend. The price of rice is constant, and the consumption of wheat is constant.", a: "36%" },
+    { q: "In a school, the number of students decreased by 10%, and the price of a rim of paper increased by 25% over the previous year. By how much should the usage of the rims of paper be cut short by each student such that the total money spent on the rims of paper remains the same as the previous year?", a: "11.11%" },
+    { q: "For a particular time, the price of sugar increases by 4n%, thereby a family decreases the consumption of sugar by (n + 10)%, but still, in that time period, the expenditure on sugar increases by 30%. If it is known that n is a multiple of 8, how much consumption would have been decreased so that the expenditure was increased by (n + 10)%?", a: "40%" },
+    { q: "The ratio of the price of a pen to that of a pencil is 5:1, whereas the ratio of the weight of a pen to that of a pencil is 3:1. The weight of a packet of pencils is twice the weight of a packet of pens. By what percent is the price of a packet of pens less than the price of a packet of pencils?", a: "16.66%" },
+    { q: "The price of sugar increases by the same amount from January to February and from February to March. The consumption of sugar in January and March is 20 kg and 12 kg, respectively. Find the consumption of sugar in February if the expenditure on sugar is the same for all three months.", a: "15 kg" },
+    { q: "While preparing a cylindrical can, the height of the can increased by 25%. Find the percentage change in its volume?", a: "25%" },
+    { q: "While constructing a conical heap, the height is increased by 10%, and its radius is decreased by 20%. Find the percentage change in its volume?", a: "29.6% decrease" },
+    { q: "The radius of a cylindrical can is increased by 14.28%, and the height is decreased by 25%. Find the percentage change in its curved surface area?", a: "14.28% decrease" },
+    { q: "A man got an order to construct a cuboidal box of volume x cm³. While preparing the box, by mistake, he increased the length by 25%, decreased the breadth by 10%, and increased the height by 12.5%. If the resultant volume of the box is 24,300 cm³, then find the value of x?", a: "19,200" },
+    { q: "The radius of a cylinder is increased by 25%. Find the percentage change in its height so that the volume remains the same?", a: "36%" },
+    { q: "The increase in the volume of a cone is directly dependent on its height when the radius is constant and directly dependent on the square of its radius when the height is constant. The height of the cone is increased by 16.66%. Find the percentage change in its radius so that the overall volume increases by 68%.", a: "20%" },
+    { q: "The length, breadth, and height of a cuboid are increased by 1%, b%, and h%, respectively, thereby its volume is increased by z%. If z is an integer and 10 ≤ l, b, h ≤ 20, then find all possible values of z?", a: "39" },
+    { q: "The length and breadth of a rectangle are increased by 20% and 40%, respectively. Find the percentage change in its perimeter?", a: "Cannot be determined" },
+    { q: "The length and breadth of a square are increased by 20% and 40%, respectively. Find the percentage change in its perimeter?", a: "30%" },
+    { q: "The sides of a cube are increased by 7%, 7%, and 10%, respectively. Find the percentage change in its total surface area?", a: "16.66%" },
+    { q: "A rectangular portion of an airport runway was getting repaired for which an estimate was made on the basis of a rate of Rs. R per square unit. But while doing the work, the length of the portion got increased by 10%, and the breadth by 8%. Over and above this, there was an increase in the cost of the repair work to the extent of 15%. What was the overall percentage increase in the cost of repair over the estimate?", a: "36.62%" },
+    { q: "Mohanlal sells Kissan Jam in cylindrical jars. Mangilal, a marketing expert, suggested that using wider jars would increase sales. If the diameter of the jars is increased by 25% without altering the volume, by what percent must the height be decreased?", a: "36%" },
+    { q: "The population of a town increases by 20% and then, the next year, the population decreases by 20%. Find: Overall percentage decrease in the population, If the final population is 96,000, find the reduction in population over the two years", a: "4% decrease, 4,000" },
+    { q: "A sweet seller decreases the price of 1 kg of sweets by 20% in the 1st month, and in the 2nd month, he increases the price of the 1 kg of sweets by 20%. He follows this particular pattern in the 3rd and 4th, 5th and 6th months, and so on. Find the month in which the price of the sweets per kg goes below 60% of the initial price for the first time.", a: "17th month" },
+    { q: "The owner of an art shop conducts his business in the following manner. Every once in a while, he raises his prices by X%, then a while later, he reduces all the new prices by X%. After one such up-down cycle, the price of a painting decreased by Rs. 441. After a second up-down cycle, the painting was sold for Rs. 1,944.811. What was the original price of the painting (in Rs.)?", a: "2,756.25" },
+    { q: "A kirana store owner conducts his business in the following manner. Every once in a while, he raises the prices of goods by a certain percentage, and a while later, he reduces his prices by the same percentage. After one such up-down cycle of increasing and then decreasing his price by x%, the price of one kg of potatoes decreases by Rs. 100. In the next cycle, he increases and then decreases his price by x/2% and then sells the one kg of potatoes for Rs. 2,376. What is the initial price of the one kg of potatoes (in Rs.)?", a: "2,500" },
+    { q: "In a college election, the president gets 40% of the total votes cast. The runner-up trails the president by 120 votes, and the contestant who secured the third position got 75% of the runner-up's votes. There are only three candidates in the election. If 30 of the total votes are deemed invalid, then find the total number of votes cast.", a: "1,800" },
+    { q: "In an election between two candidates, Ravi and Amit, 13.33% of voters didn’t participate in voting. 16.66% of votes were declared invalid, and the winner got 56.25% of the total valid votes and won by 5,460 votes. Find the total number of voters in the voting list.", a: "60,480" },
+    { q: "800 people were supposed to vote on a resolution, but 1/3rd of the people who had decided to vote for the motion were abducted. However, the opponents of the motion, through some means, managed to increase their strength by 100%. The motion was then rejected by a majority, which was 50% of that by which it would have been passed if none of these changes would have occurred. How many people finally voted for the motion and against the motion?", a: "For: 200, Against: 400" },
+    { q: "Consider the case of Bihar Assembly Elections 2020: The number of votes not cast for the PNC Party increased by 25% in the National General Election (NGE) as compared to the previous Assembly Polls, and as a result, the PNC Party lost in the NGE by a majority of twice as many votes by which it had won the Assembly Polls. If the total of 2,60,000 people voted each time, then how many of them voted for the PNC Party in the previous Assembly Polls?", a: "140,000" },
+    { q: "In an election, two-fifths of the voters promised to vote for a candidate Harital, while the rest promised to vote for Ganga Ram. Of these, on the last day, 15% of the voters went back on their promise to vote for Harital, and 25% of the voters went back on their promise to vote for Ganga Ram. Eventually, Harital lost the election by 20 votes. Then, what is the total number of voters?", a: "1,000" },
+    { q: "In an election, 8/17th of the voters promised to vote for Karan, and the rest promised to vote for Vijay. 9% of the voters who had promised to vote for Karan changed their minds and voted for Vijay. P% of the voters who had promised to vote for Vijay changed their minds and voted for Karan. The difference between their votes was 10% of the total votes. The integral value of P?", a: "23" },
+    { q: "2,000 persons voted on a resolution. 12.5% of the votes were invalid. The supporters of the resolution called for a repoll, to which the opponents of the resolution agreed. This time, 20% of the votes were invalid. The opponents decreased by 16.66%, and the motion was passed by a margin which was 100% more than that by which it was previously rejected. How many persons voted against the resolution in the repoll?", a: "750" },
+    { q: "In an election for the student leader, three candidates P, Q, and R participated. The ratio of the number of votes not obtained by P, votes not obtained by Q, and votes not obtained by R is 8:7:5. If Q gets a total of 1,260 votes, then find the total number of votes polled if no votes were invalid?", a: "4,200" },
+    { q: "Forty percent of the members of the Choudhary family are females, and 40% of the members of the same Choudhary family are unmarried. 45% of the members of the Singh family are males, and the number of married couples in the Singh family is 45% of the total number of members in this family. Also, 30% of the total number of members from both families taken together is unmarried. The ratio of single females from the Singh family to that of single males in the Choudhary family is?", a: "1:6" },
+    { q: "In a village, 60% are male, and the remaining are female. Out of them, 75% of males and 45% of females are educated. 30% of educated males and x% of educated females are post-graduate. 20% of post-graduate males and 10% of female post-graduates are in government jobs. The number of people who are in government jobs is 3.6% of the total population from that village. Find x.", a: "50" },
+    { q: "In a group of people, 28% of the members are young, while the rest are old. If 65% of the members are literates, and 25% of the literates are young, then the percentage of old people among the illiterates is nearest to?", a: "66%" },
+    { q: "In a company, the number of employees increases by x%, and also their working hours increase by x%. Due to this, the production of the company increases by 74.24%. Find the initial number of employees in the company if a total of 240 new employees joined the company.", a: "750" },
+    { q: "The height of Ram is 14.28% more than Shyam. Find the height of Shyam is how much percent less than Ram?", a: "12.5%" },
+    { q: "When ice turns into water, the volume increases by 20%. Find the percentage decrease in volume if the same amount of water turns into ice?", a: "16.66%" },
+    { q: "A student multiplied a number by 5/3 instead of 3/5. Find the percentage error in the calculation.", a: "177.77%" },
+    { q: "Fresh fish contains 59% water by weight, while sun-dried fish contains 5% water by weight. A fisherman caught fresh fish, added salt, which was 20% of the weight of the fresh fish, and prepared the sun-dried salted fish weighing 168 kg. How many kg of fresh fish had the fisherman caught?", a: "266 kg" },
+    { q: "In an examination, 35% of students failed in quants, and 42% of students failed in verbal, while 14% failed in both topics. If 222 students passed in both topics, how many students appeared to write the examination?", a: "600" },
+    { q: "In an examination, 45% of students failed in Maths, 30% failed in English, and 15% failed in both. What is the percentage of students who passed in both subjects?", a: "40%" },
+    { q: "In an exam, 40% of students passed in Hindi, and 55% passed in English. It is known that the number of students who failed in both is double the number of students who passed in both. If 16 students failed in both subjects, then find the total number of students who appeared in the exam.", a: "160" },
+    { q: "In a society, 500 people are living. 45% play cricket, 29% play hockey, and 48% play badminton. 18% didn’t play any game, while 5% of people play all three games. If 6% of people play cricket and hockey both, and 27% play cricket and badminton both, find the number of people who play only badminton.", a: "70" },
+    { q: "The Star TV agency conducted a survey in Green View Residency to see how many people like these three serials: “Anupama,” “Kalayani,” and “Imile,” which hold the first three positions of TRP. In a group of 150 people, 90, 70, and 50 people like “Kalayani,” “Imile,” and “Anupama,” respectively. The number of people who like all three serials is half the number of people who like exactly two serials. The number of people who like exactly any two out of the three serials is the same as those who like exactly any other two of the three serials. The number of people who like all three serials is?", a: "15" },
+    { q: "In an examination, 53% of students passed in Mathematics, 61% passed in Physics, 60% passed in Chemistry, 24% passed in Mathematics and Physics, 35% passed in Physics and Chemistry, 27% passed in Mathematics and Chemistry, and 5% passed in none. The ratio of the percentage of students who passed in Mathematics and Chemistry but not in Physics to the percentage of students who passed in Physics and Chemistry but not in Mathematics is?", a: "5:7" },
+    { q: "Out of 120 students in a school, 5% can play Cricket, Chess, and Carroms. If the number of players who can play any and only two games is 30, and the number of students who can play Cricket alone is 40, what is the total number of those who can play Chess alone or Carroms alone?", a: "44" },
+    { q: "If the numerator of a fraction increases by 30% and the denominator decreases by 25%, then the fraction becomes 5/6. Find the original fraction?", a: "25/52" },
+    { q: "Manoj goes to a shop to buy a TV costing Rs. 41,440. The rate of sales tax is 12%. He tells the shopkeeper to reduce the price of the TV to such an extent that he has to pay Rs. 41,440 inclusive of sales tax. Find the percentage reduction needed at the price of the TV to just satisfy his requirement.", a: "10.7%" },
+    { q: "A person spends 16.66% of his income on house rent, 16.25% of the remaining income on children’s education. Now he spends Rs. 4,700 on entertainment. Out of the remaining income, he spends 15% on food. Now he gives Rs. 1,480 to his wife for her beauty parlor, and he deposits the remaining Rs. 23,000 in ICICI Bank. Find his monthly income?", a: "Rs. 48,000" },
+    { q: "A company gives a 15% commission to its salesman on his total sales and a 2% bonus on sales above Rs. 1,800. If the salesman deposited Rs. 75,060 in the company after deducting his commission from total sales, find the total sale?", a: "Rs. 90,000" },
+    { q: "A company gives a 15% commission to its salesman on his total sales and a 2% bonus on sales above Rs. 1,800. If the salesman deposited Rs. 58,460 in the company after deducting his commission from total sales, find the total sale?", a: "Rs. 70,000" },
+    { q: "Karan works for a company, and his commission is structured in such a way that he gets a 17% commission up to sales of Rs. 12,000 and a 22% commission on sales over Rs. 12,000. If Karan deposited Rs. 47,400 in the company after deducting his earnings, find the total sale?", a: "Rs. 60,000" },
+    { q: "Ravi gets a commission on total sales at 10.2%. If the sale exceeds Rs. 15,000, he gets an additional commission as a bonus of 8.5% on the excess of sales over Rs. 15,000. If he gets a total earning of Rs. 3,180, then the bonus he received is?", a: "Rs. 750" },
+    { q: "Rahul gets A% commission on sales up to Rs. 8,000 and gets B% commission on sales more than Rs. 8,000. In January, he makes Rs. 2,400 on total sales of Rs. 15,000, and in February, he makes Rs. 4,200 on total sales of Rs. 24,000. Find the value of B - A?", a: "7.5" },
+    { q: "A man saves a certain part of his income every month so that he can purchase a car in one year. By what percent must he increase his savings so that he can purchase the same car in 9 months?", a: "33.33%" },
+    { q: "In a constituency, 40% of the voters are senior citizens. 40% of the senior citizen voters are illiterate, and 25% of the non-senior citizen voters are literates. By what percentage is the number of literate senior citizen voters less than that of illiterate non-senior citizen voters?", a: "46.66%" },
+    { q: "In a constituency, 55% of the total number of voters are males, and the rest are females. If 40% of the males are illiterate, and 40% of the females are literate, then by what percent is the number of literate males more than that of illiterate females?", a: "22.22%" },
+    { q: "The salary of a person in the month of January was Rs. 200,000 per month. In the month of February, his salary decreased by a%, and in the month of March, his February month salary increased by b%. If the March month salary is greater than the January month salary, where a and b are integers and the difference between a and b is 5, then find the lowest possible salary in the month of February?", a: "Rs. 162,000" }
+  ];
+    // ***********************************************
+
     // Dark Mode Toggle
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
     }
 
-    // Questions Array (Paste your 120 questions here)
-    const questions = [
-  { q: "Salary of a person increases by 42.84% and thereby his final salary is Rs 72,000. Find his initial salary?", a: "50,400" },
-  { q: "The population of a town decreases by 28% and thereby the final population of the town is 432,000. Find the reduction in population?", a: "16,800" },
-  { q: "The salary of a person increases by 12.5% but due to inconsistency in his work, his salary reduces by 6,875. If his final salary is Rs 21,250, then find his initial salary?", a: "2,500" },
-  { q: "If house tax is paid before the due date, one gets a reduction of 12% on the amount of the bill. By paying the tax before the due date, a person got a reduction of Rs. 2,100. The amount (in Rs.) of house tax was:", a: "15,400" },
-  { q: "Akhil gives 71 3/7% of his property to his elder son. If the value of 35% of the property that his elder son gets is Rs 125,000, then find the value of 45% of the whole property?", a: "22,500" },
-  { q: "The population of a town increases by 20% in the first year, decreases by 25% in the second year, and then again increases by 14.28% in the third year. Find the overall percentage change in the population?", a: "2.85% increase" },
-  { q: "The population of a town increases by 20% in the first year, decreases by 25% in the second year, and then again increases by 14.28% in the third year. If the final population is 108,000, then find the initial population?", a: "10,500" },
-  { q: "Population of a city Delhi at the end of 2016 was 80,000, which was increased by 26% and 22.22% in the years 2017 and 2018 respectively. In the year 2019, because of Corona, many people died, and there was a certain percentage decrease in population. Again in the year 2020, the population was increased by 36.36%. If the population of Delhi at the end of 2020 is 1.05 lakh, find by how much % the population of the city has decreased in the year 2019?", a: "37.5%" },
-  { q: "Salary of a person first increases by 5% and then the resultant salary is decreased by 7%. Find the overall % change in the salary.", a: "2.35% decrease" },
-  { q: "Population of a town increases by 3x% in the first year and then decreases by 2x% in the second year. If the overall population increase by 4%, then find the possible number of integral values of x?", a: "1" },
-  { q: "Population of a town increases by 2x% in the first year, 3x% in the second year, then decreases by 16.67% (approximately) in the third year, and then increases by 11.11% (approximately) in the 4th year. If the overall population in this time period increases by approximately 44.44%, then find the value of x?", a: "10" },
-  { q: "Population of a town increases by 2x% in the first year, 11.11% in the second year, then decreases by 16.67% (approximately) in the third year, and then increases by 3x% (approximately) in the 4th year. If the overall population in this time period increases by approximately 44.44%, then find the value of x?", a: "10" },
-  { q: "If a number first increases by 7%, then decreases by 3%, and finally the resultant number increases by 11%, then find the overall percentage change (correct up to 3 decimal places).", a: "15.2069%" },
-  { q: "A library has 20% of the books in Hindi, 50% of the remaining in English, and 30% of the remaining in French. The rest 6,300 books are in a regional language. Then find the number of books in the library?", a: "22,500" },
-  { q: "In an examination, A got 25% marks more than B, B got 10% less than C, and C got 25% more than D. If D got 320 marks out of 500, the marks obtained by A were?", a: "450" },
-  { q: "Abhijeet spent 20% of his income on food and 15% on children's education. 40% of the remaining he spent on entertainment and transport together, and 30% on medical. He is left with an amount of Rs. 8,775 after all these expenditures. What is Abhijeet's monthly income?", a: "45,000" },
-  { q: "Population of a town is increased by 30%, then decreased by 25%, and then further increased by 25%. What is the net increase or decrease percentage in the population?", a: "21.975%" },
-  { q: "Population of a town in the year 2017 increased by 40%, in 2018 decreased by 25%, in 2019 increased by 15%, and then in 2020 decreased by 20%. If the final population is 338,100, then find the initial population.", a: "350,000" },
-  { q: "The price of a machine depreciates by 7% every year. Find the overall depreciation % in the price of the machine after 3 years (correct up to three decimal places).", a: "19.564%" },
-  { q: "Salary of a person increases from Rs 308,700 to Rs 656,100 in a quarter of a year such that the percentage increase in his salary is x% in each month successively. Find the value of x?", a: "28.56%" },
-  { q: "After three successive changes (two increases and one decrease, not necessarily in that particular order), the price of a watch became 154/125 of its initial price. If the percentage changes are P, 2P, and 4P, respectively, then what is the value of 4P?", a: "40" },
-  { q: "After two successive increases, the price of a property has become 48/25 times its initial value. By how much percent was the price increased for the first time if the second increase was thrice as high (in percent) as the first?", a: "20%" },
-  { q: "An employee Ramu got a promotion, due to which his salary increased by 26 2/3%. But due to his inconsistency in work, his salary was reduced by Rs. 2,550. Ramu was transferred to Delhi for a project, so his salary was again increased by 12.5%. Now his current salary is Rs. 15,300. Find his initial income?", a: "12,750" },
-  { q: "The population of town B is 56.25% more than that of town A. For the next two years, the population of A increases by x% per year, and that of B decreases by the same percentage per year. After 2 years, if the population of A and B become equal, then the value of x is?", a: "11.11%" },
-  { q: "Current income of Ram is 20% more than Karan, where the income of Karan is 40% less than Amit. Next year, the income of Ram, Shyam, and Amit increases by 10%, 20%, and 30% respectively. Find the resultant total income of all three is how much percent more than the previous total income.", a: "21.2%" },
-  { q: "A man spent 30% of his salary on rent and 15% on grocery items. Out of the remaining salary, he invests 20% in a scheme and 40% in a fixed deposit. He is left with Rs. 15,400. Find the difference between the amount he deposited in FD and spent on rent?", a: "5,600" },
-  { q: "Ram gives 30% of his salary to his friend. 40% of the remaining salary he invests in a mutual fund. Out of the remaining income, he invests in an insurance scheme and PPF in the ratio 5:2. If the difference between the total amount invested in the mutual fund, insurance scheme together, and the amount he gave to his friend is Rs. 22,400, find the salary of Ram?", a: "80,000" },
-  { q: "A man spent 1/4th of his salary on rent and 33.33% on grocery items. Out of the remaining salary, he invests 14.28% in a scheme and 50% in a fixed deposit. He is left with Rs. 12,500. Find the difference between the amount he deposited in FD and spent on rent?", a: "3,500" },
-  { q: "In an election between two candidates, a candidate who gets 60% of the polled votes wins by 2,480 votes. If 20% of voters didn't cast their vote and 30% of the polled votes are declared invalid, then the total number of valid votes?", a: "3,472" },
-  { q: "In an election, there were five candidates, and 33.33% of the registered voters did not cast their votes. One of the candidates received 25% of the casted votes, while the other four candidates received the remaining casted votes in the proportion 1:2:3:4. If the winner of the election received 5,535 votes more than the candidate who got the least votes, then the number of registered voters was?", a: "36,900" },
-  { q: "In an election between two candidates, 30% of voters didn't cast their votes. 720 votes out of the polled votes are declared invalid. A candidate who gets 40% of the votes out of the total voters in the voting list and won the election by 1,000 votes. Then find the total number of votes polled?", a: "1,960" },
-  { q: "In an election, two candidates participated. 15% of voters did not vote. 3,900 votes were declared invalid, and the winner gets 57% of the valid votes and wins by 1,120 votes. Find the number of voters in the voting list.", a: "14,000" },
-  { q: "In an election between two candidates, x% of voters didn't cast their vote, and y% of the votes are declared invalid. Here, x and y are integers, and y is 10 less than x. A person who gets 35% of the total voters in the voting list wins the election by 25% of the valid votes polled. Find the value of 3x + 2y?", a: "130" },
-  { q: "If 20% of A is equal to 30% of B, then find A is what percent of B?", a: "150%" },
-  { q: "If the income tax is increased by 19%, the net income is reduced by 1%. The rate of income tax is?", a: "5%" },
-  { q: "If the income tax is increased by 22%, the net income is reduced by 3%. The rate of income tax is?", a: "12%" },
-  { q: "Fresh fruit contains 68% water, and dry fruits contain 20% water. How much dry fruit can be obtained from 100 kg of fresh fruits?", a: "40 kg" },
-  { q: "A large watermelon weighs 36 kg with 92% of its weight being water. It is kept out in the sun, and after some time, only 91% of its weight is water. By what weight did the watermelon decrease?", a: "4 kg" },
-  { q: "Fresh dates contain 80% water by weight, whereas dry dates contain 10% water by weight. A trader purchases fresh dates at Rs. 100 per kg and makes a profit of 10% by selling them after drying. Find the selling price per kg at which the trader sells the dry dates?", a: "Rs. 495" },
-  { q: "There was a heavy viral infection in a country, so the government of that country announced that some employees would stay at home. So, in an organization, yesterday 11% of male and 15% of female employees were absent, but today 32% of male and 15% of female employees are absent. However, the number of male and female employees present today is equal. If yesterday the total number of employees present was 5,495, then find the total number of employees in the organization?", a: "6,300" },
-  { q: "For the cause of the coronavirus, the government told some employees to stay at home. So, in an organization, yesterday 13% of male and 20% of female employees were absent, but today 8% of female and 31% of male employees are absent. However, the number of male and female employees present today is equal. If the total number of employees present yesterday was 3,528, then find the total number of employees in the organization?", a: "4,200" },
-  { q: "Ram scored 37% in an exam and passed by 43 marks, whereas Shyam scored 33% in the exam and failed by 17 marks. Find: Maximum marks, Pass marks, Pass percentage", a: "1,500, 512, 34.13%" },
-  { q: "Ram scored 38% in an exam and failed by 17 marks. Shyam scored 40% in the same exam and passed by 5 marks. Find: Maximum marks, Pass marks, Pass percentage", a: "1,100, 435, 39.5%" },
-  { q: "In an exam, Ram scored 43% marks, and thereby his score was 23 more than Karan. Shyam scored 31% in the same exam, and his score was 13 less than Karan. Find the score of Karan.", a: "106" },
-  { q: "There is an entrance exam held every year, and the aspirants are required to clear a particular fixed cut-off or pass percentage. Amit scored 40% in the exam and failed. The next year, he increased his score by 50% and still failed by 70 marks. The next year, he again gave the exam, and his score increased by 12 percentage points compared to the last year, and this time he passed by 14 marks. Find the pass percentage of the exam?", a: "70%" },
-  { q: "In an examination, it is required to get 296 of the total maximum aggregate marks to pass. A student gets 259 marks and is declared failed. The difference between the marks obtained by the student and that required to pass is 5%. What are the maximum aggregate marks a student can get?", a: "740" },
-  { q: "Meena scored 40% in an examination, and after review, even though her score was increased by 50%, she failed by 35 marks. If her post-review score is increased by 20%, she will have 7 marks more than the passing score. The percentage score needed for passing the examination is?", a: "70%" },
-  { q: "Rahul scored 53% marks in an exam, but his score was 56 less than Rohit. Rajiv scored 65% in the same exam, and his score was 40 more than Rohit. Vivek's score is 11% more than Rohit. Find the score of Vivek?", a: "532.8" },
-  { q: "A candidate who gets x% marks in an examination fails by 30 marks, but another candidate who gets y% marks passes by 42 marks. If the total marks obtained by both candidates are 312, and if x and y are both integers, then which of the following could be the value of x?", a: "30" },
-  { q: "A person increases his consumption of sugar by 37.5% because the price of sugar is reduced by x%. Find x, if the expenditure remains constant.", a: "27.27%" },
-  { q: "The price of a commodity is increased by 25%, and the quantity purchased is decreased by 23%. What is the percentage increase or decrease in the amount spent on the commodity?", a: "3.75% decrease" },
-  { q: "Basir’s working hours per day were increased by 15%, and his wages per hour were increased by 20%. By how much percent did his daily earnings increase?", a: "38%" },
-  { q: "The price of a movie ticket in a zoo is decreased by 1%, but the total revenue collection is increased by 83.33% because the number of visitors increased. If the number of visitors is now 350, then find how many visitors increased in the zoo?", a: "189" },
-  { q: "In a village, the production of food grains increased by 40%, and the per capita production of food grains increased by 27% during a certain period. The percentage by which the population of the village increased during the same period is nearest to?", a: "10%" },
-  { q: "A man's annual income has increased by Rs. 40,000, but the tax on income that he has to pay has reduced from 11.5% to 6.9%. He now pays the same amount of tax as before. What is his increased income (in Rs.)?", a: "100,000" },
-  { q: "A man's annual income has increased by Rs. 2.6 lakhs, but the tax on income that he has to pay has reduced from 17.1% to 13.3%. In both cases, 35% of the income is tax-free. What is his initial income (in lakhs) if he paid equal taxes in both cases?", a: "9.1 lakh" },
-  { q: "A man's annual income has increased by Rs. 2.2 lakhs, but the tax on income that he has to pay has reduced from 17.1% to 13.3%. In both cases, 35% and 40% of the income is tax-free. What is his initial income (in lakhs) if he paid equal taxes in both cases?", a: "5.6 lakh" },
-  { q: "A solution contains 16.5% salt. From this, 18 liters of water is evaporated. Now, the concentration of salt in the solution becomes 20.9%. Find the initial quantity of the solution?", a: "85.5 liters" },
-  { q: "When the price of sugar increased by 53%, a family reduced its consumption per month such that the expenditure on sugar was only 19% more than the earlier one. If the family consumed 38.7 kg of sugar per month earlier, then what is the reduction in consumption of sugar per month?", a: "8.6 kg" },
-  { q: "Due to a 25% fall in the rate of eggs, one can buy 2 dozen eggs more than before by investing Rs. 162. Then, the original rate per dozen of the eggs is?", a: "Rs. 27" },
-  { q: "The government reduced the price of sugar by 15%. By this, a consumer can buy 7.4 kg more sugar for Rs. 1,258. The original price per kg of sugar is?", a: "Rs. 30" },
-  { q: "There is 26.4% sugar in the 28-liter solution of sugar and water. After boiling, 6 liters of water get evaporated from it. Then, the % of sugar left in the solution is?", a: "31.68%" },
-  { q: "John gets Rs. 57 per hour of regular work and Rs. 114 per hour of overtime work. He works altogether 172 hours, and his income from overtime hours is 15% of his income from regular hours. Then, for how many hours did he work overtime?", a: "12 hours" },
-  { q: "A rectangular portion of an airport runway was getting repaired for which an estimate was made on the basis of a rate of Rs. R per square unit. But while doing the work, the length of the portion got increased by 10%, and the breadth by 8%. Over and above this, there was an increase in the cost of the repair work to the extent of 15%. What was the overall percentage increase in the cost of repair over the estimate?", a: "36.62%" },
-  { q: "A family consumes 25 kg of rice and 9 kg of wheat per month, spending Rs. 350. The price of rice is 20% of the price of wheat. If the price of wheat is increased by 20%, then find the percentage reduction in the consumption of rice if they have the same amount to spend. The price of rice is constant, and the consumption of wheat is constant.", a: "36%" },
-  { q: "In a school, the number of students decreased by 10%, and the price of a rim of paper increased by 25% over the previous year. By how much should the usage of the rims of paper be cut short by each student such that the total money spent on the rims of paper remains the same as the previous year?", a: "11.11%" },
-  { q: "For a particular time, the price of sugar increases by 4n%, thereby a family decreases the consumption of sugar by (n + 10)%, but still, in that time period, the expenditure on sugar increases by 30%. If it is known that n is a multiple of 8, how much consumption would have been decreased so that the expenditure was increased by (n + 10)%?", a: "40%" },
-  { q: "The ratio of the price of a pen to that of a pencil is 5:1, whereas the ratio of the weight of a pen to that of a pencil is 3:1. The weight of a packet of pencils is twice the weight of a packet of pens. By what percent is the price of a packet of pens less than the price of a packet of pencils?", a: "16.66%" },
-  { q: "The price of sugar increases by the same amount from January to February and from February to March. The consumption of sugar in January and March is 20 kg and 12 kg, respectively. Find the consumption of sugar in February if the expenditure on sugar is the same for all three months.", a: "15 kg" },
-  { q: "While preparing a cylindrical can, the height of the can increased by 25%. Find the percentage change in its volume?", a: "25%" },
-  { q: "While constructing a conical heap, the height is increased by 10%, and its radius is decreased by 20%. Find the percentage change in its volume?", a: "29.6% decrease" },
-  { q: "The radius of a cylindrical can is increased by 14.28%, and the height is decreased by 25%. Find the percentage change in its curved surface area?", a: "14.28% decrease" },
-  { q: "A man got an order to construct a cuboidal box of volume x cm³. While preparing the box, by mistake, he increased the length by 25%, decreased the breadth by 10%, and increased the height by 12.5%. If the resultant volume of the box is 24,300 cm³, then find the value of x?", a: "19,200" },
-  { q: "The radius of a cylinder is increased by 25%. Find the percentage change in its height so that the volume remains the same?", a: "36%" },
-  { q: "The increase in the volume of a cone is directly dependent on its height when the radius is constant and directly dependent on the square of its radius when the height is constant. The height of the cone is increased by 16.66%. Find the percentage change in its radius so that the overall volume increases by 68%.", a: "20%" },
-  { q: "The length, breadth, and height of a cuboid are increased by 1%, b%, and h%, respectively, thereby its volume is increased by z%. If z is an integer and 10 ≤ l, b, h ≤ 20, then find all possible values of z?", a: "39" },
-  { q: "The length and breadth of a rectangle are increased by 20% and 40%, respectively. Find the percentage change in its perimeter?", a: "Cannot be determined" },
-  { q: "The length and breadth of a square are increased by 20% and 40%, respectively. Find the percentage change in its perimeter?", a: "30%" },
-  { q: "The sides of a cube are increased by 7%, 7%, and 10%, respectively. Find the percentage change in its total surface area?", a: "16.66%" },
-  { q: "A rectangular portion of an airport runway was getting repaired for which an estimate was made on the basis of a rate of Rs. R per square unit. But while doing the work, the length of the portion got increased by 10%, and the breadth by 8%. Over and above this, there was an increase in the cost of the repair work to the extent of 15%. What was the overall percentage increase in the cost of repair over the estimate?", a: "36.62%" },
-  { q: "Mohanlal sells Kissan Jam in cylindrical jars. Mangilal, a marketing expert, suggested that using wider jars would increase sales. If the diameter of the jars is increased by 25% without altering the volume, by what percent must the height be decreased?", a: "36%" },
-  { q: "The population of a town increases by 20% and then, the next year, the population decreases by 20%. Find: Overall percentage decrease in the population, If the final population is 96,000, find the reduction in population over the two years", a: "4% decrease, 4,000" },
-  { q: "A sweet seller decreases the price of 1 kg of sweets by 20% in the 1st month, and in the 2nd month, he increases the price of the 1 kg of sweets by 20%. He follows this particular pattern in the 3rd and 4th, 5th and 6th months, and so on. Find the month in which the price of the sweets per kg goes below 60% of the initial price for the first time.", a: "17th month" },
-  { q: "The owner of an art shop conducts his business in the following manner. Every once in a while, he raises his prices by X%, then a while later, he reduces all the new prices by X%. After one such up-down cycle, the price of a painting decreased by Rs. 441. After a second up-down cycle, the painting was sold for Rs. 1,944.811. What was the original price of the painting (in Rs.)?", a: "2,756.25" },
-  { q: "A kirana store owner conducts his business in the following manner. Every once in a while, he raises the prices of goods by a certain percentage, and a while later, he reduces his prices by the same percentage. After one such up-down cycle of increasing and then decreasing his price by x%, the price of one kg of potatoes decreases by Rs. 100. In the next cycle, he increases and then decreases his price by x/2% and then sells the one kg of potatoes for Rs. 2,376. What is the initial price of the one kg of potatoes (in Rs.)?", a: "2,500" },
-  { q: "In a college election, the president gets 40% of the total votes cast. The runner-up trails the president by 120 votes, and the contestant who secured the third position got 75% of the runner-up's votes. There are only three candidates in the election. If 30 of the total votes are deemed invalid, then find the total number of votes cast.", a: "1,800" },
-  { q: "In an election between two candidates, Ravi and Amit, 13.33% of voters didn’t participate in voting. 16.66% of votes were declared invalid, and the winner got 56.25% of the total valid votes and won by 5,460 votes. Find the total number of voters in the voting list.", a: "60,480" },
-  { q: "800 people were supposed to vote on a resolution, but 1/3rd of the people who had decided to vote for the motion were abducted. However, the opponents of the motion, through some means, managed to increase their strength by 100%. The motion was then rejected by a majority, which was 50% of that by which it would have been passed if none of these changes would have occurred. How many people finally voted for the motion and against the motion?", a: "For: 200, Against: 400" },
-  { q: "Consider the case of Bihar Assembly Elections 2020: The number of votes not cast for the PNC Party increased by 25% in the National General Election (NGE) as compared to the previous Assembly Polls, and as a result, the PNC Party lost in the NGE by a majority of twice as many votes by which it had won the Assembly Polls. If the total of 2,60,000 people voted each time, then how many of them voted for the PNC Party in the previous Assembly Polls?", a: "140,000" },
-  { q: "In an election, two-fifths of the voters promised to vote for a candidate Harital, while the rest promised to vote for Ganga Ram. Of these, on the last day, 15% of the voters went back on their promise to vote for Harital, and 25% of the voters went back on their promise to vote for Ganga Ram. Eventually, Harital lost the election by 20 votes. Then, what is the total number of voters?", a: "1,000" },
-  { q: "In an election, 8/17th of the voters promised to vote for Karan, and the rest promised to vote for Vijay. 9% of the voters who had promised to vote for Karan changed their minds and voted for Vijay. P% of the voters who had promised to vote for Vijay changed their minds and voted for Karan. The difference between their votes was 10% of the total votes. The integral value of P?", a: "23" },
-  { q: "2,000 persons voted on a resolution. 12.5% of the votes were invalid. The supporters of the resolution called for a repoll, to which the opponents of the resolution agreed. This time, 20% of the votes were invalid. The opponents decreased by 16.66%, and the motion was passed by a margin which was 100% more than that by which it was previously rejected. How many persons voted against the resolution in the repoll?", a: "750" },
-  { q: "In an election for the student leader, three candidates P, Q, and R participated. The ratio of the number of votes not obtained by P, votes not obtained by Q, and votes not obtained by R is 8:7:5. If Q gets a total of 1,260 votes, then find the total number of votes polled if no votes were invalid?", a: "4,200" },
-  { q: "Forty percent of the members of the Choudhary family are females, and 40% of the members of the same Choudhary family are unmarried. 45% of the members of the Singh family are males, and the number of married couples in the Singh family is 45% of the total number of members in this family. Also, 30% of the total number of members from both families taken together is unmarried. The ratio of single females from the Singh family to that of single males in the Choudhary family is?", a: "1:6" },
-  { q: "In a village, 60% are male, and the remaining are female. Out of them, 75% of males and 45% of females are educated. 30% of educated males and x% of educated females are post-graduate. 20% of post-graduate males and 10% of female post-graduates are in government jobs. The number of people who are in government jobs is 3.6% of the total population from that village. Find x.", a: "50" },
-  { q: "In a group of people, 28% of the members are young, while the rest are old. If 65% of the members are literates, and 25% of the literates are young, then the percentage of old people among the illiterates is nearest to?", a: "66%" },
-  { q: "In a company, the number of employees increases by x%, and also their working hours increase by x%. Due to this, the production of the company increases by 74.24%. Find the initial number of employees in the company if a total of 240 new employees joined the company.", a: "750" },
-  { q: "The height of Ram is 14.28% more than Shyam. Find the height of Shyam is how much percent less than Ram?", a: "12.5%" },
-  { q: "When ice turns into water, the volume increases by 20%. Find the percentage decrease in volume if the same amount of water turns into ice?", a: "16.66%" },
-  { q: "A student multiplied a number by 5/3 instead of 3/5. Find the percentage error in the calculation.", a: "177.77%" },
-  { q: "Fresh fish contains 59% water by weight, while sun-dried fish contains 5% water by weight. A fisherman caught fresh fish, added salt, which was 20% of the weight of the fresh fish, and prepared the sun-dried salted fish weighing 168 kg. How many kg of fresh fish had the fisherman caught?", a: "266 kg" },
-  { q: "In an examination, 35% of students failed in quants, and 42% of students failed in verbal, while 14% failed in both topics. If 222 students passed in both topics, how many students appeared to write the examination?", a: "600" },
-  { q: "In an examination, 45% of students failed in Maths, 30% failed in English, and 15% failed in both. What is the percentage of students who passed in both subjects?", a: "40%" },
-  { q: "In an exam, 40% of students passed in Hindi, and 55% passed in English. It is known that the number of students who failed in both is double the number of students who passed in both. If 16 students failed in both subjects, then find the total number of students who appeared in the exam.", a: "160" },
-  { q: "In a society, 500 people are living. 45% play cricket, 29% play hockey, and 48% play badminton. 18% didn’t play any game, while 5% of people play all three games. If 6% of people play cricket and hockey both, and 27% play cricket and badminton both, find the number of people who play only badminton.", a: "70" },
-  { q: "The Star TV agency conducted a survey in Green View Residency to see how many people like these three serials: “Anupama,” “Kalayani,” and “Imile,” which hold the first three positions of TRP. In a group of 150 people, 90, 70, and 50 people like “Kalayani,” “Imile,” and “Anupama,” respectively. The number of people who like all three serials is half the number of people who like exactly two serials. The number of people who like exactly any two out of the three serials is the same as those who like exactly any other two of the three serials. The number of people who like all three serials is?", a: "15" },
-  { q: "In an examination, 53% of students passed in Mathematics, 61% passed in Physics, 60% passed in Chemistry, 24% passed in Mathematics and Physics, 35% passed in Physics and Chemistry, 27% passed in Mathematics and Chemistry, and 5% passed in none. The ratio of the percentage of students who passed in Mathematics and Chemistry but not in Physics to the percentage of students who passed in Physics and Chemistry but not in Mathematics is?", a: "5:7" },
-  { q: "Out of 120 students in a school, 5% can play Cricket, Chess, and Carroms. If the number of players who can play any and only two games is 30, and the number of students who can play Cricket alone is 40, what is the total number of those who can play Chess alone or Carroms alone?", a: "44" },
-  { q: "If the numerator of a fraction increases by 30% and the denominator decreases by 25%, then the fraction becomes 5/6. Find the original fraction?", a: "25/52" },
-  { q: "Manoj goes to a shop to buy a TV costing Rs. 41,440. The rate of sales tax is 12%. He tells the shopkeeper to reduce the price of the TV to such an extent that he has to pay Rs. 41,440 inclusive of sales tax. Find the percentage reduction needed at the price of the TV to just satisfy his requirement.", a: "10.7%" },
-  { q: "A person spends 16.66% of his income on house rent, 16.25% of the remaining income on children’s education. Now he spends Rs. 4,700 on entertainment. Out of the remaining income, he spends 15% on food. Now he gives Rs. 1,480 to his wife for her beauty parlor, and he deposits the remaining Rs. 23,000 in ICICI Bank. Find his monthly income?", a: "Rs. 48,000" },
-  { q: "A company gives a 15% commission to its salesman on his total sales and a 2% bonus on sales above Rs. 1,800. If the salesman deposited Rs. 75,060 in the company after deducting his commission from total sales, find the total sale?", a: "Rs. 90,000" },
-  { q: "A company gives a 15% commission to its salesman on his total sales and a 2% bonus on sales above Rs. 1,800. If the salesman deposited Rs. 58,460 in the company after deducting his commission from total sales, find the total sale?", a: "Rs. 70,000" },
-  { q: "Karan works for a company, and his commission is structured in such a way that he gets a 17% commission up to sales of Rs. 12,000 and a 22% commission on sales over Rs. 12,000. If Karan deposited Rs. 47,400 in the company after deducting his earnings, find the total sale?", a: "Rs. 60,000" },
-  { q: "Ravi gets a commission on total sales at 10.2%. If the sale exceeds Rs. 15,000, he gets an additional commission as a bonus of 8.5% on the excess of sales over Rs. 15,000. If he gets a total earning of Rs. 3,180, then the bonus he received is?", a: "Rs. 750" },
-  { q: "Rahul gets A% commission on sales up to Rs. 8,000 and gets B% commission on sales more than Rs. 8,000. In January, he makes Rs. 2,400 on total sales of Rs. 15,000, and in February, he makes Rs. 4,200 on total sales of Rs. 24,000. Find the value of B - A?", a: "7.5" },
-  { q: "A man saves a certain part of his income every month so that he can purchase a car in one year. By what percent must he increase his savings so that he can purchase the same car in 9 months?", a: "33.33%" },
-  { q: "In a constituency, 40% of the voters are senior citizens. 40% of the senior citizen voters are illiterate, and 25% of the non-senior citizen voters are literates. By what percentage is the number of literate senior citizen voters less than that of illiterate non-senior citizen voters?", a: "46.66%" },
-  { q: "In a constituency, 55% of the total number of voters are males, and the rest are females. If 40% of the males are illiterate, and 40% of the females are literate, then by what percent is the number of literate males more than that of illiterate females?", a: "22.22%" },
-  { q: "The salary of a person in the month of January was Rs. 200,000 per month. In the month of February, his salary decreased by a%, and in the month of March, his February month salary increased by b%. If the March month salary is greater than the January month salary, where a and b are integers and the difference between a and b is 5, then find the lowest possible salary in the month of February?", a: "Rs. 162,000" }
-];
+    // Scroll Functions
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-    const questionsContainer = document.getElementById('questions');
+    function scrollToBottom() {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
 
     // Render Questions
+    const questionsContainer = document.getElementById('questions');
     questions.forEach((item, index) => {
       const questionDiv = document.createElement('div');
       questionDiv.className = 'question-container';
@@ -361,17 +418,22 @@
         <div class="answer" id="answer-${index}" style="display:none">Ans: ${item.a}</div>
       `;
       questionsContainer.appendChild(questionDiv);
+      
+      // Add Enter key support
+      questionDiv.querySelector('.answer-input').addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') checkAnswer(index);
+      });
     });
 
-    // Improved Answer Check with Format Flexibility
+    // Answer Validation
     function checkAnswer(index) {
       const userAnswer = document.querySelectorAll('.answer-input')[index].value
         .trim()
-        .replace(/,/g, '') // Remove commas
+        .replace(/,/g, '')
         .toLowerCase();
 
       const correctAnswer = questions[index].a
-        .replace(/,/g, '') // Remove commas
+        .replace(/,/g, '')
         .toLowerCase();
 
       const answerStatus = document.querySelectorAll('.answer-status')[index];
@@ -391,12 +453,12 @@
       answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
     }
 
-    // Enhanced PDF Generation
+    // PDF Generation
     function downloadPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       
-      // PDF Header
+      // Header
       doc.setFontSize(18);
       doc.text("Percentage Questions by Raman Tiwari", 15, 20);
       doc.setFontSize(12);
@@ -405,27 +467,22 @@
 
       let y = 40;
       questions.forEach((item, index) => {
-        // Split question into multiple lines if needed
         const questionLines = doc.splitTextToSize(`Q${index + 1}. ${item.q}`, 180);
         const answerLines = doc.splitTextToSize(`Ans: ${item.a}`, 180);
         
-        // Calculate space needed
         const questionHeight = questionLines.length * 7;
         const answerHeight = answerLines.length * 7;
         
-        // Add question
         doc.setFontSize(12);
         doc.setTextColor(40);
         doc.text(questionLines, 15, y);
         y += questionHeight + 5;
         
-        // Add answer
         doc.setFontSize(11);
         doc.setTextColor(100);
         doc.text(answerLines, 20, y);
         y += answerHeight + 15;
         
-        // Add new page if needed
         if (y > 280) {
           doc.addPage();
           y = 20;
