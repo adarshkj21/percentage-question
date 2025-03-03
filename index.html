@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quant By Raman Tiwari Sir</title>
   <style>
+    /* Prevent horizontal scrolling */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* ensures only vertical scrolling */
+    }
+
     /* ========== Base Styles ========== */
     :root {
       --primary-color: #4CAF50;
@@ -110,6 +117,7 @@
       color: #fff;
       font-size: 1rem;
       cursor: pointer;
+      min-width: 160px; /* ensures a decent default width but not too wide */
     }
     .chapter-select option {
       background: #333;
@@ -405,15 +413,31 @@
       .brand-title {
         font-size: 1.4rem;
       }
+
+      /* Let the header-top and header-bottom stack if needed */
       .header-top,
       .header-bottom {
         flex-direction: column;
+        align-items: flex-start;
       }
+
       .controls {
+        width: 100%;
         justify-content: flex-start;
       }
+
+      /* Chapter select and action buttons go full width if needed */
+      .chapter-select {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+      .action-buttons {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
       .quiz-btn {
-        align-self: flex-end;
+        margin-left: auto;
       }
     }
   </style>
@@ -647,7 +671,61 @@
       essentials: {
         name: "Essentials",
         questions: [
-          { q: "Sample essential question 1?", a: "Answer 1" }
+        { q: "AB is a 2-digit prime number where A is not equal to B. If the digits are reversed, the new number BA is also a prime number. Then find the sum of all such numbers.", a: "" },
+        { q: "If m is the number of prime numbers between 0 and 50, and n is the number of prime numbers between 50 and 100, then what is (m - n) equal to?", a: "" },
+        { q: "Three numbers which are co-prime to each other are such that the product of the first two is 286 and that of the last two is 770. What is the sum of the three numbers?", a: "" },
+        { q: "x, y, and z are such that x + y + z = 38. What is the maximum value of x?", a: "" },
+        { q: "In four consecutive prime numbers that are in ascending order, the product of the first three is 385 and that of the last three is 1001. The largest given prime number is?", a: "" },
+        { q: "If N² - 33, N² - 31, and N² - 29 are prime numbers, then what is the number of possible values of N, where N is an integer?", a: "" },
+        { q: "How many pairs of natural numbers are there such that the difference of their squares is 35?", a: "" },
+        { q: "If the number 1005x4 is completely divisible by 8, then the smallest integer in place of x will be?", a: "" },
+        { q: "How many pairs of x and y are possible in the number 763x4y2, if the number is divisible by 9?", a: "" },
+        { q: "What should replace x in the number 94x2357 so that the number is divisible by 11?", a: "" },
+        { q: "If the number 670458x9595y is divisible by 144, then find the value of (2x + 3y).", a: "" },
+        { q: "Convert the following non-terminating but recurring numbers into fraction: 4.122222..., 0.188888..., 0.43213213213..., 8.33333...", a: "" },
+        { q: "What is the difference between the mean and median of the given data: 4, 6, 3, 7, 10, 13, 16, and 5?", a: "" },
+        { q: "Set of data is as under: 4, 2, 3, 2, 7, 4, 8, 5, 2, 4, 5, 6, 2, 5, 6, 6, 5, 4, 6, 5, 3, 5, 4, 3. What is the mode of the data?", a: "" },
+        { q: "Let x be the median of data: 33, 42, 28, 49, 32, 37, 52, 57, 35, 41. If 32 is replaced by 36 and 41 by 63, then the median is y. Find the difference between x and y.", a: "" },
+        { q: "Shireen draws a circle in her courtyard. She then measures the circle's circumference and its diameter with her measuring tape and records them as two integers, A and B respectively. She finds that A and B are coprimes, that is, their greatest common divisor is 1. She also finds their ratio, A:B, to be: 3.141614161416... (repeating endlessly). What is A - B?", a: "" },
+        { q: "If the roots of the equations 3x² + tx - 10 = 0 and 2x² + px + 2 = 0 are real and equal, and here t, p are integers, then find the sum of all possible values of t and p.", a: "" },
+        { q: "If the roots of the equation 3x² - 4x + k = 0 are real and distinct, then find the maximum integral value of k.", a: "" },
+        { q: "If the roots of the equation 3x² - 4x + k = 0 are not real, then find the minimum integral value of k.", a: "" },
+        { q: "Find the roots of the quadratic equations: i. 2x² - 7x + 3 = 0, ii. 2x² + x - 4 = 0, iii. 4x² + 4√3x + 3 = 0, iv. 2x² + x + 4 = 0, v. x² + x - 702 = 0, vi. x² - 7x - 11 = 0, vii. x² - 3x - 378 = 0, viii. 24x² - 95x - 74 = 0.", a: "" },
+        { q: "If x and y are positive integers where y is less than 30, then find the total possible solutions for the equation 7x + 4y = 830.", a: "" },
+        { q: "For the equation 6x + 8y = 817, find the possible number of positive integral solutions.", a: "" },
+        { q: "For the equation 11x - 3y = 940, find the maximum integral sum of x and y if y > 20.", a: "" },
+        { q: "For the equation 9x + 7y = 1025, find the maximum integral sum of x and y.", a: "" },
+        { q: "Find the number of integral and positive integral solutions for the following equations: x + y + 39 = xy, 3x - 2y - 16 + xy = 0, 6x + 5y = xy - 10, 15x - 2y + 5xy = 12.", a: "" },
+        { q: "Find the number of integral solutions, positive integral solutions for the following equations: 1/x + 1/y = 1/20, 2/x + 3/y = 1/60, 2/x - 1/y = 1/2.", a: "" },
+        { q: "Find the number of positive integral solutions for the following equations: y = (24x + 500)/(x + 7), y = (24x - 132)/(x + 7).", a: "" },
+        { q: "If a, b, c, d, and e are natural numbers, then find the number of solutions for the equation a + b + c + d + e = 200.", a: "" },
+        { q: "Find the positive integral solution for the equation a + b + c + d = 90, where the values a, b, c, and d are at least 2, 3, 5, 7 respectively.", a: "" },
+        { q: "If k, t, p are integers, then find the sum of all possible values of k, t, and p for the equation (p - 3)(p + 2)xk³xt² = 14700.", a: "" },
+        { q: "If the positive integral values of a, b, and c for the equation, (a - 2)x(a - 4)x(c - 1)xb⁴ = 72030.", a: "" },
+        { q: "If A + B = 79, where A is a non-zero multiple of 3 and greater than 60, B is a non-zero multiple of 4 and less than 10, then find possible solution (A, B).", a: "" },
+        { q: "If A + B + C = 245, where A, B, and C are non-zero multiples of 8, 5, and 3, and A is greater than or equal to 200 but less than or equal to 220, then find possible solution of (A, B, C).", a: "" },
+        { q: "Find the sum of the following series: 1² + 2² + 3² + 4² + 5² + ... + 20², 9³ + 10³ + 11³ + 12³ + ... + 19³, 2² + 4² + 6² + 8² + ... + 40², 7 + 28 + 63 + 112 + 175... up to 10 terms.", a: "" },
+        { q: "In an AP, if d = 8, n = 10, and an = 80, then find the value of a.", a: "" },
+        { q: "Find the 19th term of the AP: 5, 11, 17, 23, ...?", a: "" },
+        { q: "What is the sum of the first 30 even natural numbers?", a: "" },
+        { q: "Which term of the arithmetic progression 13, 18, 23, ... is 80 more than its 20th term?", a: "" },
+        { q: "If the sum of the first p terms of an A.P. is ap² + bp, find its common difference.", a: "" },
+        { q: "The first term of an A.P. is p and its common difference is q. Find its 10th term.", a: "" },
+        { q: "If seven times the 7th term of an A.P. is equal to eleven times the 11th term, then what will be its 18th term?", a: "" },
+        { q: "How many terms of the A.P. 18, 16, 14, … be taken so that their sum is zero?", a: "" },
+        { q: "The 8th term of an AP is zero, and the 12th term is 20. Find the first term and the common difference.", a: "" },
+        { q: "If the 5th term of an AP is 15 and the sum of the first 10 terms is 120, find the first term.", a: "" },
+        { q: "If the nth term of an AP is 20 + 7n, then find the sum of the first 20 terms of the AP.", a: "" },
+        { q: "If the sum of n terms of an AP is 4n² + 3n, then find the 20th term and the sum of the first 15 terms.", a: "" },
+        { q: "Can zero be a part of a geometric series?", a: "" },
+        { q: "If the 6th term of a G.P. is 32, and its 8th term is 128, then find the common ratio of the G.P.", a: "" },
+        { q: "The sum of a few terms of any ratio series is 728. If the common ratio is 3 and the last term is 486, then what will be the first term of the series?", a: "" },
+        { q: "An increasing GP is formed by three positive numbers. The new numbers form an AP if the middle term of the geometric progression is doubled. Find the common ratio of the GP.", a: "" },
+        { q: "The geometric mean of two numbers is 6, and their arithmetic mean is 6.5. The numbers are?", a: "" },
+        { q: "What is the sum of the below-given infinite series: 1/2 + 1/3 + 1/4 + 1/9 + 1/8 + 1/27...?", a: "" },
+        { q: "Write the prime factorization of the following numbers: 171500, 4356000, 189000, 94500, 315900, 771750, 7200, 777600, 307200.", a: "" },
+        { q: "To cover a certain distance, a car takes 2 hours more time than a bike but 2 hours less time than a truck. If the speed of the car and bike is 80 kmph and 100 kmph, then find the speed of the truck.", a: "" },
+        { q: "Price of sugar increases by the same amount from January to February and from February to March. Consumption of sugar in January and March is 20 kg and 12 kg respectively. Find the consumption of sugar in February if the expenditure on sugar is the same for all three months.", a: "" }
         ]
       }
     };
@@ -874,9 +952,7 @@
 
     /**
      * The main verification function.
-     * Once the user is incorrect for the first time, we set finalAnswer='incorrect',
-     * remove skip, show next, and keep it locked in as incorrect even if the user
-     * eventually enters the correct answer.
+     * Once the user is incorrect, we mark finalAnswer='incorrect', hide skip, show next, etc.
      */
     function verifyQuizAnswer() {
       const statusEl = document.getElementById('quizAnswerStatus');
@@ -887,17 +963,16 @@
       const userAnswer = userAnswerRaw.replace(/,/g, '').replace(/%/g, '').toLowerCase();
       const correctAnswer = correctAnswerRaw.replace(/,/g, '').replace(/%/g, '').toLowerCase();
 
-      // Show the status area
       statusEl.style.display = 'block';
 
-      // If question is already locked in as correct, do nothing
+      // If finalAnswer is 'correct', do nothing
       if (finalAnswer === 'correct') {
         statusEl.className = 'answer-status correct';
         statusEl.textContent = 'You already got this correct.';
         return;
       }
 
-      // If there's no official answer, treat it as incorrect
+      // If no official answer, treat as incorrect
       if (!correctAnswerRaw) {
         if (finalAnswer === null) {
           finalAnswer = 'incorrect';
@@ -912,7 +987,6 @@
 
       // If user typed the correct string
       if (userAnswer === correctAnswer) {
-        // If first attempt
         if (finalAnswer === null) {
           finalAnswer = 'correct';
           quizStats.correct++;
@@ -922,14 +996,12 @@
           statusEl.className = 'answer-status correct';
           statusEl.textContent = '✅ Correct Answer!';
         }
-        // If already marked incorrect, keep it that way
+        // If already marked incorrect, keep it that way but let them know
         else if (finalAnswer === 'incorrect') {
           statusEl.className = 'answer-status incorrect';
           statusEl.textContent = 'You got it right now, but it is still counted as incorrect.';
         }
-      }
-      // If user typed incorrectly
-      else {
+      } else {
         // If first attempt => mark as incorrect
         if (finalAnswer === null) {
           finalAnswer = 'incorrect';
@@ -941,7 +1013,7 @@
           statusEl.className = 'answer-status incorrect';
           statusEl.textContent = '❌ Incorrect - Try Again or Reveal';
         }
-        // If already incorrect, remain incorrect
+        // If already incorrect
         else if (finalAnswer === 'incorrect') {
           statusEl.className = 'answer-status incorrect';
           statusEl.textContent = 'Still incorrect. The question is locked as incorrect.';
@@ -950,8 +1022,8 @@
     }
 
     /**
-     * Reveal the correct answer. If user never verified, or is still null,
-     * we mark it incorrect. If user was correct, do nothing.
+     * Reveal the correct answer. If user never verified, or finalAnswer=null,
+     * we mark it as incorrect. If user was correct, do nothing.
      */
     function revealQuizAnswer() {
       // If already correct, do nothing
@@ -971,7 +1043,7 @@
 
     /**
      * If user hasn't answered yet, skip => 'skipped'.
-     * If user is already incorrect or correct, do nothing.
+     * If user is already incorrect/correct, do nothing.
      */
     function skipQuizQuestion() {
       if (finalAnswer === null) {
@@ -980,8 +1052,6 @@
         document.getElementById('quizCorrectAnswer').style.display = 'block';
         showNextButton();
       }
-      // If user already answered incorrectly/correctly, we do nothing here
-      // or you can forcibly do nextQuizQuestion().
     }
 
     function showNextButton() {
